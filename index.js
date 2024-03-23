@@ -12,7 +12,11 @@ var userschema = mongoose.Schema({
     weight : Number,
     height :Number ,
     Age: Number,
-    
+    counter:Number,
+    refer: String,
+    country:String
+
+
 });
 
 app.use(bp.urlencoded({extended:true}));
@@ -52,3 +56,19 @@ app.get('/profile', requiresAuth(), async(req, res) => {
 app.listen(3000,()=>{
     console.log("listening on http://localhost:3000");
 })
+
+
+
+//TWILIO
+const accountSid = 'AC2432ec38ded5be3df0578d9c77918fcf';
+const authToken = '[AuthToken]';
+const client = require('twilio')(accountSid, authToken);
+
+client.messages
+    .create({
+        body: 'Your appointment is coming up on July 21 at 3PM',
+        from: 'whatsapp:+14155238886',
+        to: 'whatsapp:+916387488465'
+    })
+    .then(message => console.log(message.sid))
+    .done();
